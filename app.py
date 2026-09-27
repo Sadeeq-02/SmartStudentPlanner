@@ -541,19 +541,24 @@ def assignments():
     courses_list = cursor.fetchall()
 
     cursor.execute("""
-        SELECT
-            assignments.id,
-            assignments.title,
-            assignments.description,
-            assignments.deadline,
-            assignments.completed,
-            courses.course_code,
-            courses.course_name
-        FROM assignments
-        JOIN courses
-        ON assignments.course_id = courses.id
-        ORDER BY assignments.deadline
-    """)
+    SELECT
+        assignments.id,
+        assignments.title,
+        assignments.description,
+        assignments.deadline,
+        assignments.completed,
+        courses.course_code,
+        courses.course_name,
+        CAST(
+            julianday(date(assignments.deadline))
+            - julianday(date('now'))
+            AS INTEGER
+        ) AS days_remaining
+    FROM assignments
+    JOIN courses
+    ON assignments.course_id = courses.id
+    ORDER BY assignments.deadline
+""")
 
     assignments_list = cursor.fetchall()
 
