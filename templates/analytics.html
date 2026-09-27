@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Analytics</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <div class="logo">
+        Big Dollar University
+    </div>
+    <ul>
+        <li>
+            <a href="/">🏠 Dashboard</a>
+        </li>
+        <li>
+            <a href="/profile">👤 Profile</a>
+        </li>
+        <li>
+            <a href="/courses">📚 Courses</a>
+        </li>
+        <li>
+            <a href="/timetable">📅 Timetable</a>
+        </li>
+        <li>
+            <a href="/assignments">📝 Assignments</a>
+        </li>
+        <li>
+            <a href="/exams">🎓 Exams</a>
+        </li>
+        <li>
+            <a href="/gpa">🧮 GPA</a>
+        </li>
+        <li>
+            <a href="/analytics">📊 Analytics</a>
+        </li>
+    </ul>
+</nav>
+<header>
+    <h1>
+        Study Performance Analytics
+    </h1>
+    <p>
+        Monitor your academic activities and progress.
+    </p>
+</header>
+<main>
+    <section class="dashboard-grid">
+        <div class="dashboard-card">
+            <h2>
+                {{ total_courses }}
+            </h2>
+            <p>
+                Total Courses
+            </p>
+        </div>
+        <div class="dashboard-card">
+            <h2>
+                {{ total_sessions }}
+            </h2>
+            <p>
+                Study Sessions
+            </p>
+        </div>
+        <div class="dashboard-card">
+            <h2>
+                {{ total_assignments }}
+            </h2>
+            <p>
+                Total Assignments
+            </p>
+        </div>
+        <div class="dashboard-card">
+            <h2>
+                {{ upcoming_exams }}
+            </h2>
+            <p>
+                Upcoming Exams
+            </p>
+        </div>
+    </section>
+    <section class="progress-box">
+        <h2>
+            Assignment Performance
+        </h2>
+        <p>
+            Completed:
+            <strong>{{ completed_assignments }}</strong>
+        </p>
+        <p>
+            Pending:
+            <strong>{{ pending_assignments }}</strong>
+        </p>
+        <div class="progress-container">
+            <div
+                class="progress-bar"
+                style="width: {{ assignment_progress }}%;">
+            </div>
+        </div>
+        <p class="progress-text">
+            {{ assignment_progress }}% completed
+        </p>
+    </section>
+    <section class="progress-box">
+        <h2>
+            Academic Performance
+        </h2>
+        <p>
+            Current GPA
+        </p>
+        <h2>
+            {{ gpa }}
+        </h2>
+    </section>
+    <section class="progress-box">
+        <h2>
+            Study Summary
+        </h2>
+        <p>
+            You currently have
+            <strong>{{ total_courses }}</strong>
+            courses and
+            <strong>{{ total_sessions }}</strong>
+            scheduled study sessions.
+        </p>
+        <br>
+        <p>
+            You have completed
+            <strong>{{ completed_assignments }}</strong>
+            assignments and have
+            <strong>{{ pending_assignments }}</strong>
+            remaining.
+        </p>
+        <br>
+        <p>
+            There are
+            <strong>{{ upcoming_exams }}</strong>
+            upcoming exams in your planner.
+        </p>
+    </section>
+</main>
+<footer>
+    <p>
+        Big Dollar University
+    </p>
+    <p>
+        Study Performance Analytics
+    </p>
+</footer>
+</body>
+</html>

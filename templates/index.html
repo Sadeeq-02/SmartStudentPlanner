@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Dollar University</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            Big Dollar University
+        </div>
+        <ul>
+            <li>
+                <a href="/">🏠 Dashboard</a>
+            </li>
+            <li>
+                <a href="/profile">👤 Profile</a>
+            </li>
+            <li>
+                <a href="/courses">📚 Courses</a>
+            </li>
+            <li>
+                <a href="/timetable">📅 Timetable</a>
+            </li>
+            <li>
+                <a href="/assignments">📝 Assignments</a>
+            </li>
+            <li>
+                <a href="/exams">🎓 Exams</a>
+            </li>
+            <li>
+                <a href="/gpa">🧮 GPA</a>
+            </li>
+        <li><a href="/analytics">📊 Analytics</a></li>
+<li><a href="/logout">🚪 Logout</a></li>
+</ul>
+    </nav>
+    <header>
+        {% if student %}
+        <h1>
+            Welcome, {{ student[1] }}!
+        </h1>
+        <p>
+            Big Dollar University Dashboard
+        </p>
+        {% else %}
+        <h1>
+            Big Dollar University
+        </h1>
+        <p>
+            Organize your academic life in one place.
+        </p>
+        {% endif %}
+    </header>
+    <main>
+        <!-- Dashboard Statistics -->
+        <section class="dashboard-grid">
+            <div class="dashboard-card">
+                <h2>
+                    {{ total_courses }}
+                </h2>
+                <p>
+                    Total Courses
+                </p>
+            </div>
+            <div class="dashboard-card">
+                <h2>
+                    {{ total_sessions }}
+                </h2>
+                <p>
+                    Study Sessions
+                </p>
+            </div>
+            <div class="dashboard-card">
+                <h2>
+                    {{ pending_assignments }}
+                </h2>
+                <p>
+                    Pending Assignments
+                </p>
+            </div>
+            <div class="dashboard-card">
+                <h2>
+                    {{ upcoming_exams }}
+                </h2>
+                <p>
+                    Upcoming Exams
+                </p>
+            </div>
+        </section>
+        <!-- GPA -->
+        <section class="progress-box">
+            <h2>
+                Academic Performance
+            </h2>
+            <p>
+                Current GPA
+            </p>
+            <h2>
+                {{ gpa }}
+            </h2>
+        </section>
+        <!-- Assignment Progress -->
+        <section class="progress-box">
+            <h2>
+                Assignment Progress
+            </h2>
+            <p>
+                Completed:
+                <strong>{{ completed_assignments }}</strong>
+                of
+                <strong>{{ total_assignments }}</strong>
+                assignments
+            </p>
+            <div class="progress-container">
+                <div
+                    class="progress-bar"
+                    style="width: {{ assignment_progress }}%;">
+                </div>
+            </div>
+            <p class="progress-text">
+                {{ assignment_progress }}% completed
+            </p>
+        </section>
+        <!-- Quick Actions -->
+        <section class="progress-box">
+            <h2>
+                Quick Actions
+            </h2>
+            <p>
+                Use the navigation menu to manage your academic activities.
+            </p>
+            <br>
+            <a href="/courses">
+                <button>Add Course</button>
+            </a>
+            <a href="/assignments">
+                <button>Add Assignment</button>
+            </a>
+            <a href="/exams">
+                <button>Add Exam</button>
+            </a>
+            <a href="/timetable">
+                <button>Plan Study Session</button>
+            </a>
+        </section>
+    </main>
+    <footer>
+        <p>
+            Big Dollar University
+        </p>
+        <p>
+            Academic Management System
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Big Dollar University</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <h1>🎓 Big Dollar University</h1>
+
+        <h2>Student Login</h2>
+
+        <form method="POST">
+
+            <label for="register_number">Register Number</label>
+            <input
+                type="text"
+                name="register_number"
+                id="register_number"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                required
+            >
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <p>
+    <a href="/forgot-password">Forgot Password?</a>
+</p>
+
+<p>
+    Don't have an account?
+    <a href="/register">Register here</a>
+</p>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Big Dollar University</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .register-box {
+            background: white;
+            width: 90%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h1>Create Account</h1>
+
+    <p class="subtitle">
+        Big Dollar University
+    </p>
+
+    <form method="POST">
+
+        <label for="register_number">
+            Register Number
+        </label>
+
+        <input
+            type="text"
+            id="register_number"
+            name="register_number"
+            placeholder="e.g. 2024/12345"
+            required
+        >
+
+        <label for="full_name">
+            Full Name
+        </label>
+
+        <input
+            type="text"
+            id="full_name"
+            name="full_name"
+            placeholder="Enter your full name"
+            required
+        >
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create a password"
+            required
+        >
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="/login">Login</a>
+    </div>
+
+</div>
+
+</body>
+</html>

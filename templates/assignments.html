@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Assignments</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        🎓 Smart Planner
+    </div>
+
+    <ul>
+
+        <li><a href="/">🏠 Dashboard</a></li>
+        <li><a href="/profile">👤 Profile</a></li>
+        <li><a href="/courses">📚 Courses</a></li>
+        <li><a href="/timetable">📅 Timetable</a></li>
+        <li><a href="/assignments">📝 Assignments</a></li>
+        <li><a href="/exams">🎓 Exams</a></li>
+        <li><a href="/gpa">🧮 GPA</a></li>
+
+            <li>
+            <a href="/analytics">📊 Analytics</a>
+        </li>
+</ul>
+
+</nav>
+
+
+<header>
+
+    <h1>📝 Assignment Tracker</h1>
+
+    <p>
+        Keep track of your academic assignments and deadlines.
+    </p>
+
+</header>
+
+
+<main>
+
+    <section class="progress-box">
+
+        <h2>➕ Add Assignment</h2>
+
+        <form method="POST">
+
+            <p>
+
+                <label>Course</label>
+
+                <select name="course_id" required>
+
+                    <option value="">
+                        Select Course
+                    </option>
+
+                    {% for course in courses %}
+
+                    <option value="{{ course[0] }}">
+
+                        {{ course[1] }} -
+                        {{ course[2] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </p>
+
+
+            <p>
+
+                <label>Assignment Title</label>
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Example: Calculus Assignment"
+                    required>
+
+            </p>
+
+
+            <p>
+
+                <label>Description</label>
+
+                <textarea
+                    name="description"
+                    placeholder="Enter assignment details"></textarea>
+
+            </p>
+
+
+            <p>
+
+                <label>Deadline</label>
+
+                <input
+                    type="date"
+                    name="deadline"
+                    required>
+
+            </p>
+
+
+            <button type="submit">
+                Add Assignment
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section class="progress-box">
+
+        <h2>📋 My Assignments</h2>
+
+        {% if assignments %}
+
+        <table>
+
+            <tr>
+
+                <th>Course</th>
+
+                <th>Assignment</th>
+
+                <th>Deadline</th>
+
+                <th>Time Left</th>
+
+                <th>Status</th>
+
+            </tr>
+
+
+            {% for assignment in assignments %}
+
+            <tr>
+
+                <td>
+                    {{ assignment[1] }}
+                </td>
+
+                <td>
+
+                    <strong>
+                        {{ assignment[3] }}
+                    </strong>
+
+                    {% if assignment[4] %}
+
+                    <br>
+
+                    <small>
+                        {{ assignment[4] }}
+                    </small>
+
+                    {% endif %}
+
+                </td>
+
+
+                <td>
+                    {{ assignment[5] }}
+                </td>
+
+
+                <td>
+
+                    {% if assignment[7] < 0 %}
+
+                        Overdue
+
+                    {% elif assignment[7] == 0 %}
+
+                        Due Today
+
+                    {% else %}
+
+                        {{ assignment[7] }} days
+
+                    {% endif %}
+
+                </td>
+
+
+                <td>
+
+                    {% if assignment[6] == 1 %}
+
+                        ✅ Completed
+
+                    {% else %}
+
+                        ⏳ Pending
+
+                        <br>
+
+                        <a href="/assignment/{{ assignment[0] }}/complete">
+                            Mark Complete
+                        </a>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p>
+            No assignments added yet.
+        </p>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Big Dollar University © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

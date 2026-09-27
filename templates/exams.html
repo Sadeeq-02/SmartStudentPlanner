@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Exams</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        🎓 Smart Planner
+    </div>
+
+    <ul>
+
+        <li><a href="/">🏠 Dashboard</a></li>
+        <li><a href="/profile">👤 Profile</a></li>
+        <li><a href="/courses">📚 Courses</a></li>
+        <li><a href="/timetable">📅 Timetable</a></li>
+        <li><a href="/assignments">📝 Assignments</a></li>
+        <li><a href="/exams">🎓 Exams</a></li>
+        <li><a href="/gpa">🧮 GPA</a></li>
+
+            <li>
+            <a href="/analytics">📊 Analytics</a>
+        </li>
+</ul>
+
+</nav>
+
+
+<header>
+
+    <h1>🎓 Exam Countdown</h1>
+
+    <p>
+        Keep track of your upcoming examinations.
+    </p>
+
+</header>
+
+
+<main>
+
+    <section class="progress-box">
+
+        <h2>➕ Add Examination</h2>
+
+        <form method="POST">
+
+            <p>
+
+                <label>Course</label>
+
+                <select name="course_id" required>
+
+                    <option value="">
+                        Select Course
+                    </option>
+
+                    {% for course in courses %}
+
+                    <option value="{{ course[0] }}">
+
+                        {{ course[1] }} -
+                        {{ course[2] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </p>
+
+
+            <p>
+
+                <label>Exam Date</label>
+
+                <input
+                    type="date"
+                    name="exam_date"
+                    required>
+
+            </p>
+
+
+            <p>
+
+                <label>Exam Time</label>
+
+                <input
+                    type="time"
+                    name="exam_time"
+                    required>
+
+            </p>
+
+
+            <p>
+
+                <label>Venue</label>
+
+                <input
+                    type="text"
+                    name="venue"
+                    placeholder="Example: ICT Hall">
+
+            </p>
+
+
+            <button type="submit">
+                Add Exam
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section class="progress-box">
+
+        <h2>📋 Upcoming Examinations</h2>
+
+        {% if exams %}
+
+        <table>
+
+            <tr>
+
+                <th>Course</th>
+
+                <th>Date</th>
+
+                <th>Time</th>
+
+                <th>Venue</th>
+
+                <th>Countdown</th>
+
+            </tr>
+
+
+            {% for exam in exams %}
+
+            <tr>
+
+                <td>
+
+                    <strong>
+                        {{ exam[1] }}
+                    </strong>
+
+                    <br>
+
+                    {{ exam[2] }}
+
+                </td>
+
+
+                <td>
+                    {{ exam[3] }}
+                </td>
+
+
+                <td>
+                    {{ exam[4] }}
+                </td>
+
+
+                <td>
+
+                    {% if exam[5] %}
+
+                        {{ exam[5] }}
+
+                    {% else %}
+
+                        Not specified
+
+                    {% endif %}
+
+                </td>
+
+
+                <td>
+
+                    {% if exam[6] < 0 %}
+
+                        Exam Passed
+
+                    {% elif exam[6] == 0 %}
+
+                        🔴 Today
+
+                    {% elif exam[6] == 1 %}
+
+                        ⚠️ Tomorrow
+
+                    {% else %}
+
+                        {{ exam[6] }} days remaining
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p>
+            No examinations added yet.
+        </p>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Big Dollar University © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

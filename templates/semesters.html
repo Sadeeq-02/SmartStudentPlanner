@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semesters - Big Dollar University</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+        }
+
+        .subtitle {
+            color: #666;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        input, select, button {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        button {
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .semester {
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .semester h3 {
+            margin-top: 0;
+        }
+
+        .empty {
+            color: #777;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Semester Management</h1>
+        <p class="subtitle">
+            Create and manage your academic semesters.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Add Semester</h2>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Semester name e.g. First Semester 2026/2027"
+                required
+            >
+
+            <input
+                type="text"
+                name="academic_year"
+                placeholder="Academic year e.g. 2026/2027"
+                required
+            >
+
+            <select name="term" required>
+                <option value="">Select semester</option>
+                <option value="First Semester">First Semester</option>
+                <option value="Second Semester">Second Semester</option>
+            </select>
+
+            <button type="submit">Add Semester</button>
+
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Your Semesters</h2>
+
+        {% if semesters %}
+
+            {% for semester in semesters %}
+
+                <div class="semester">
+
+                    <h3>{{ semester.name }}</h3>
+
+                    <p>
+                        <strong>Academic Year:</strong>
+                        {{ semester.academic_year }}
+                    </p>
+
+                    <p>
+                        <strong>Term:</strong>
+                        {{ semester.term }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                No semesters have been added yet.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Semesters - Big Dollar University</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <div class="logo">
+            🎓 Big Dollar University
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Dashboard</a>
+
+            <a href="/profile">Profile</a>
+
+            <a href="/courses">Courses</a>
+
+            <a href="/timetable">Timetable</a>
+
+            <a href="/assignments">Assignments</a>
+
+            <a href="/exams">Exams</a>
+
+            <a href="/gpa">GPA</a>
+
+            <a href="/analytics">📊 Analytics</a>
+
+            <a href="/semesters">📚 Semesters</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>📚 Semester Management</h1>
+
+        <p>
+            Manage your academic semesters and select your current semester.
+        </p>
+
+    </div>
+
+
+    <!-- ADD SEMESTER -->
+
+    <div class="card">
+
+        <h2>➕ Add New Semester</h2>
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Semester Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Example: First Semester"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="academic_year">
+                    Academic Year
+                </label>
+
+                <input
+                    type="text"
+                    id="academic_year"
+                    name="academic_year"
+                    placeholder="Example: 2026/2027"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit" class="btn">
+                ➕ Add Semester
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- SEMESTER LIST -->
+
+    <div class="card">
+
+        <h2>📋 Your Semesters</h2>
+
+        {% if semesters %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Semester</th>
+
+                        <th>Academic Year</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for semester in semesters %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ semester["name"] }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ semester["academic_year"] }}
+                        </td>
+
+                        <td>
+
+                            {% if semester["is_current"] == 1 %}
+
+                                ⭐ <strong>Current Semester</strong>
+
+                            {% else %}
+
+                                Not Current
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if semester["is_current"] != 1 %}
+
+                                <a
+                                    href="/semester/{{ semester['id'] }}/current"
+                                    class="btn"
+                                >
+                                    Set Current
+                                </a>
+
+                            {% else %}
+
+                                <span>
+                                    ✓ Active
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <p>No semesters have been added yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <p>
+        Big Dollar University © 2026
+    </p>
+
+</footer>
+
+</body>
+</html>

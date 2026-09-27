@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Courses - Big Dollar University</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .course-list {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .course-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #ffffff;
+        }
+
+        .course-item h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .course-info {
+            margin: 8px 0;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .delete-button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .delete-button:hover {
+            background: #b91c1c;
+        }
+
+        .edit-button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .edit-button:hover {
+            background: #1d4ed8;
+        }
+
+        .semester-badge {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 6px 10px;
+            background: #e0f2fe;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <div class="logo">
+            🎓 Big Dollar University
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Dashboard</a>
+
+            <a href="/profile">Profile</a>
+
+            <a href="/courses">Courses</a>
+
+            <a href="/timetable">Timetable</a>
+
+            <a href="/assignments">Assignments</a>
+
+            <a href="/exams">Exams</a>
+
+            <a href="/gpa">GPA</a>
+
+            <a href="/analytics">📊 Analytics</a>
+
+            <a href="/semesters">📚 Semesters</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="page-header">
+
+        <h1>📚 Course Management</h1>
+
+        <p>
+            Add and manage your courses by academic semester.
+        </p>
+
+    </div>
+
+
+    <!-- ADD COURSE -->
+
+    <div class="card">
+
+        <h2>➕ Add New Course</h2>
+
+        <p>
+            New courses will automatically be assigned
+            to your current semester.
+        </p>
+
+
+        <form method="POST">
+
+
+            <div class="form-group">
+
+                <label for="course_code">
+                    Course Code
+                </label>
+
+                <input
+                    type="text"
+                    id="course_code"
+                    name="course_code"
+                    placeholder="Example: MTH 201"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="course_name">
+                    Course Name
+                </label>
+
+                <input
+                    type="text"
+                    id="course_name"
+                    name="course_name"
+                    placeholder="Example: Calculus II"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="units">
+                    Course Units
+                </label>
+
+                <input
+                    type="number"
+                    id="units"
+                    name="units"
+                    min="1"
+                    max="10"
+                    placeholder="Example: 3"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn">
+
+                ➕ Add Course
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- COURSE LIST -->
+
+    <div class="card">
+
+        <h2>📋 Your Courses</h2>
+
+
+        {% if courses %}
+
+
+        <div class="course-list">
+
+
+            {% for course in courses %}
+
+
+            <div class="course-item">
+
+
+                <h3>
+                    📘 {{ course["course_code"] }}
+                </h3>
+
+
+                <div class="course-info">
+
+                    <strong>
+                        Course:
+                    </strong>
+
+                    {{ course["course_name"] }}
+
+                </div>
+
+
+                <div class="course-info">
+
+                    <strong>
+                        Units:
+                    </strong>
+
+                    {{ course["units"] }}
+
+                </div>
+
+
+                <div class="course-info">
+
+                    <strong>
+                        Semester:
+                    </strong>
+
+
+                    {% if course["semester_name"] %}
+
+                        <div class="semester-badge">
+
+                            📚 {{ course["semester_name"] }}
+
+                            -
+                            {{ course["academic_year"] }}
+
+                        </div>
+
+                    {% else %}
+
+                        <span>
+                            No semester assigned
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="course-actions">
+
+
+                    <a
+                        href="/course/{{ course['id'] }}/edit"
+                        class="edit-button">
+
+                        ✏️ Edit
+
+                    </a>
+
+
+                    <form
+                        method="POST"
+                        action="/course/{{ course['id'] }}/delete"
+                        onsubmit="return confirm(
+                            'Are you sure you want to delete this course?'
+                        );"
+                    >
+
+                        <button
+                            type="submit"
+                            class="delete-button">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        {% else %}
+
+            <p>
+                No courses have been added yet.
+            </p>
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+<footer>
+
+    <p>
+        Big Dollar University © 2026
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

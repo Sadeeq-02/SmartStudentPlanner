@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>GPA Calculator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        🎓 Smart Planner
+    </div>
+
+    <ul>
+
+        <li><a href="/">🏠 Dashboard</a></li>
+        <li><a href="/profile">👤 Profile</a></li>
+        <li><a href="/courses">📚 Courses</a></li>
+        <li><a href="/timetable">📅 Timetable</a></li>
+        <li><a href="/assignments">📝 Assignments</a></li>
+        <li><a href="/exams">🎓 Exams</a></li>
+        <li><a href="/gpa">🧮 GPA</a></li>
+
+            <li>
+            <a href="/analytics">📊 Analytics</a>
+        </li>
+</ul>
+
+</nav>
+
+
+<header>
+
+    <h1>🧮 GPA Calculator</h1>
+
+    <p>
+        Calculate your academic performance.
+    </p>
+
+</header>
+
+
+<main>
+
+    <section class="progress-box">
+
+        <h2>➕ Add Course Grade</h2>
+
+        <form method="POST">
+
+            <p>
+
+                <label>Course</label>
+
+                <select name="course_id" required>
+
+                    <option value="">
+                        Select Course
+                    </option>
+
+                    {% for course in courses %}
+
+                    <option value="{{ course[0] }}">
+
+                        {{ course[1] }} -
+                        {{ course[2] }}
+                        ({{ course[3] }} units)
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </p>
+
+
+            <p>
+
+                <label>Grade</label>
+
+                <select name="grade" required>
+
+                    <option value="A">
+                        A - 5 Points
+                    </option>
+
+                    <option value="B">
+                        B - 4 Points
+                    </option>
+
+                    <option value="C">
+                        C - 3 Points
+                    </option>
+
+                    <option value="D">
+                        D - 2 Points
+                    </option>
+
+                    <option value="E">
+                        E - 1 Point
+                    </option>
+
+                    <option value="F">
+                        F - 0 Points
+                    </option>
+
+                </select>
+
+            </p>
+
+
+            <button type="submit">
+                Add Grade
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section class="progress-box">
+
+        <h2>📋 My Results</h2>
+
+        {% if grades %}
+
+        <table>
+
+            <tr>
+
+                <th>Course</th>
+
+                <th>Units</th>
+
+                <th>Grade</th>
+
+                <th>Grade Point</th>
+
+            </tr>
+
+
+            {% for grade in grades %}
+
+            <tr>
+
+                <td>
+
+                    {{ grade[1] }} -
+                    {{ grade[2] }}
+
+                </td>
+
+                <td>
+
+                    {{ grade[3] }}
+
+                </td>
+
+                <td>
+
+                    {{ grade[4] }}
+
+                </td>
+
+                <td>
+
+                    {% if grade[4] == "A" %}
+                        5
+
+                    {% elif grade[4] == "B" %}
+                        4
+
+                    {% elif grade[4] == "C" %}
+                        3
+
+                    {% elif grade[4] == "D" %}
+                        2
+
+                    {% elif grade[4] == "E" %}
+                        1
+
+                    {% else %}
+                        0
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p>
+            No grades added yet.
+        </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <section class="progress-box">
+
+        <h2>🎯 Current GPA</h2>
+
+        <h1>
+            {{ gpa }}
+        </h1>
+
+        <p>
+            GPA is calculated using the 5-point grading system.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Big Dollar University © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

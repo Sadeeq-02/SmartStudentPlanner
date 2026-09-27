@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Study Timetable</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        🎓 Smart Planner
+    </div>
+
+    <ul>
+
+        <li><a href="/">🏠 Dashboard</a></li>
+
+        <li><a href="/profile">👤 Profile</a></li>
+
+        <li><a href="/courses">📚 Courses</a></li>
+
+        <li><a href="/timetable">📅 Timetable</a></li>
+
+        <li><a href="/assignments">📝 Assignments</a></li>
+
+        <li><a href="/exams">🎓 Exams</a></li>
+
+        <li><a href="/gpa">🧮 GPA</a></li>
+
+            <li>
+            <a href="/analytics">📊 Analytics</a>
+        </li>
+</ul>
+
+</nav>
+
+
+<header>
+
+    <h1>📅 Study Timetable</h1>
+
+    <p>
+        Plan your weekly study sessions
+    </p>
+
+</header>
+
+
+<main>
+
+    <section class="progress-box">
+
+        <h2>Add Study Session</h2>
+
+        <form method="POST">
+
+            <p>
+
+                <label>Course</label>
+
+                <select name="course_id" required>
+
+                    <option value="">
+                        Select Course
+                    </option>
+
+                    {% for course in courses %}
+
+                    <option value="{{ course[0] }}">
+
+                        {{ course[1] }} -
+                        {{ course[2] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </p>
+
+
+            <p>
+
+                <label>Day</label>
+
+                <select name="day" required>
+
+                    <option value="">
+                        Select Day
+                    </option>
+
+                    <option value="Monday">
+                        Monday
+                    </option>
+
+                    <option value="Tuesday">
+                        Tuesday
+                    </option>
+
+                    <option value="Wednesday">
+                        Wednesday
+                    </option>
+
+                    <option value="Thursday">
+                        Thursday
+                    </option>
+
+                    <option value="Friday">
+                        Friday
+                    </option>
+
+                    <option value="Saturday">
+                        Saturday
+                    </option>
+
+                    <option value="Sunday">
+                        Sunday
+                    </option>
+
+                </select>
+
+            </p>
+
+
+            <p>
+
+                <label>Start Time</label>
+
+                <input
+                    type="time"
+                    name="start_time"
+                    required>
+
+            </p>
+
+
+            <p>
+
+                <label>Duration (minutes)</label>
+
+                <input
+                    type="number"
+                    name="duration"
+                    min="15"
+                    max="600"
+                    placeholder="Example: 60"
+                    required>
+
+            </p>
+
+
+            <button type="submit">
+                Add Study Session
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section class="progress-box">
+
+        <h2>📖 My Study Schedule</h2>
+
+        {% if sessions %}
+
+        <table>
+
+            <tr>
+
+                <th>Course</th>
+
+                <th>Day</th>
+
+                <th>Start Time</th>
+
+                <th>Duration</th>
+
+            </tr>
+
+
+            {% for session in sessions %}
+
+            <tr>
+
+                <td>
+                    {{ session[1] }} -
+                    {{ session[2] }}
+                </td>
+
+                <td>
+                    {{ session[3] }}
+                </td>
+
+                <td>
+                    {{ session[4] }}
+                </td>
+
+                <td>
+                    {{ session[5] }} minutes
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p>
+            No study sessions added yet.
+        </p>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Big Dollar University © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

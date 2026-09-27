@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Course - Big Dollar University</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav>
+    <div class="nav-container">
+
+        <div class="logo">
+            🎓 Big Dollar University
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/courses">Courses</a>
+            <a href="/timetable">Timetable</a>
+            <a href="/assignments">Assignments</a>
+            <a href="/exams">Exams</a>
+            <a href="/gpa">GPA</a>
+            <a href="/analytics">📊 Analytics</a>
+            <a href="/semesters">🗂️ Semesters</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+
+    <h1>✏️ Edit Course</h1>
+
+    <p>Update your course information.</p>
+
+    <form method="POST">
+
+        <label for="course_code">
+            Course Code
+        </label>
+
+        <input
+            type="text"
+            id="course_code"
+            name="course_code"
+            value="{{ course['course_code'] }}"
+            placeholder="Example: MTH 201"
+            required
+        >
+
+
+        <label for="course_name">
+            Course Name
+        </label>
+
+        <input
+            type="text"
+            id="course_name"
+            name="course_name"
+            value="{{ course['course_name'] }}"
+            placeholder="Example: Calculus II"
+            required
+        >
+
+
+        <label for="units">
+            Course Units
+        </label>
+
+        <input
+            type="number"
+            id="units"
+            name="units"
+            value="{{ course['units'] }}"
+            min="1"
+            max="10"
+            required
+        >
+
+
+        <label for="semester_id">
+            Semester
+        </label>
+
+        <select
+            id="semester_id"
+            name="semester_id"
+            required
+        >
+
+            {% for semester in semesters %}
+
+                <option
+                    value="{{ semester['id'] }}"
+                    {% if semester['id'] == course['semester_id'] %}
+                        selected
+                    {% endif %}
+                >
+                    {{ semester['name'] }} - {{ semester['academic_year'] }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <button type="submit">
+            💾 Save Changes
+        </button>
+
+        <a href="/courses">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>
