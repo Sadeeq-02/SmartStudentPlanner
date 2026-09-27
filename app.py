@@ -381,7 +381,7 @@ def courses():
 
         cursor.execute("""
             INSERT INTO courses
-            (course_code, course_name, units, semester_id user_id)
+            (course_code, course_name, units, semester_id, user_id)
             VALUES (?, ?, ?, ?, ?)
         """, (
             course_code,
@@ -638,7 +638,12 @@ def exams():
             exams.exam_time,
             exams.venue,
             courses.course_code,
-            courses.course_name
+            courses.course_name,
+            CAST(
+                julianday(date(exams.exam_date))
+                - julianday(date('now'))
+                AS INTEGER
+            ) AS days_remaining
         FROM exams
         JOIN courses
         ON exams.course_id = courses.id
@@ -1090,4 +1095,9 @@ def delete_course(course_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    import os
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )
